@@ -1,4 +1,4 @@
-const mapPage = () => {
+const MapPage = () => {
   return <div>Map Page!</div>;
 };
-export default mapPage;
+export default MapPage;
