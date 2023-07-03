@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useSearchParams } from "react-router-dom";
 import MapDisplay from "../components/MapDisplay";
 import ComboboxLocation from "../components/ComboxLocation";
 import { GraphQLClient } from "graphql-request";
@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 const MapPage = () => {
+  const [searchParams] = useSearchParams();
+  const address = searchParams.get("address") || "";
   const { lat, lng } = useParams();
   const { data, isLoading } = useQuery({
     queryKey: ["getStores", lat, lng],
@@ -28,7 +30,7 @@ const MapPage = () => {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-3/12 border md:border-r-8 overflow-x-auto md:overflow-visible">
             <div className="border p-4 rounded">
-              <ComboboxLocation />
+              <ComboboxLocation defaultValue={address} />
             </div>
             <ul className="flex md:flex-col overflow-x-auto">
               {data &&
