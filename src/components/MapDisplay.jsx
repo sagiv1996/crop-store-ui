@@ -66,9 +66,9 @@ const MapDisplay = ({ center, cropStores }) => {
               <Marker
                 onClick={() => handleClickMarker(marker.id)}
                 position={marker.attributes.location}
-                label={marker.attributes.name}
+                label={`${index + 1}`}
                 key={index}
-              ></Marker>
+              />
             ))}
           </GoogleMap>
         </div>

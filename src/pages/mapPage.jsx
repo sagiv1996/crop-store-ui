@@ -1,26 +1,36 @@
-import { useParams, Link, useSearchParams } from "react-router-dom";
+import {
+  useParams,
+  Link,
+  useSearchParams,
+  useNavigate,
+} from "react-router-dom";
+import { useState } from "react";
+import { GraphQLClient } from "graphql-request";
+import { useQuery } from "@tanstack/react-query";
 import MapDisplay from "../components/MapDisplay";
 import ComboboxLocation from "../components/ComboxLocation";
-import { GraphQLClient } from "graphql-request";
 import { getStores } from "../graphqlQueries";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 
 const MapPage = () => {
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address") || "";
   const { lat, lng } = useParams();
-  const { data, isLoading } = useQuery({
-    queryKey: ["getStores", lat, lng],
-    queryFn: async () =>
-      await client.request(getStores, { lat: Number(lat), lng: Number(lng) }),
-    enabled: !!lat && !!lng,
-  });
+  const navigate = useNavigate();
 
-  const center = { lat: Number(lat), lng: Number(lng) };
+  const handleChange = (newLocation) => {
+    const { latLng } = newLocation;
+    const { lat, lng } = latLng;
+    navigate(`/map/${lat}/${lng}`);
+  };
   const client = new GraphQLClient(
     `${import.meta.env.VITE_BACKEND_ENDPOINT}/graphql`
   );
+
+  const { data, isLoading } = useQuery(["getStores", lat, lng], () =>
+    client.request(getStores, { lat: Number(lat), lng: Number(lng) })
+  );
+
+  const center = { lat: Number(lat), lng: Number(lng) };
 
   return (
     <div>
@@ -30,17 +40,20 @@ const MapPage = () => {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-3/12 border md:border-r-8 overflow-x-auto md:overflow-visible">
             <div className="border p-4 rounded">
-              <ComboboxLocation defaultValue={address} />
+              <ComboboxLocation
+                defaultValue={address}
+                onChange={handleChange}
+              />
             </div>
             <ul className="flex md:flex-col overflow-x-auto">
               {data &&
-                data.stores.data.map((cropStore) => (
+                data.stores.data.map((cropStore, index) => (
                   <li
                     key={cropStore.attributes.name}
-                    className="flex-none  border p-4 rounded"
+                    className="flex-none border p-4 rounded"
                   >
                     <h3 className="text-xl font-bold">
-                      {cropStore.attributes.name}
+                      {`${index + 1}`} - {cropStore.attributes.name}
                     </h3>
                     <h3 className="text-gray-600">
                       Distance: {cropStore.attributes.distance} km
@@ -48,9 +61,6 @@ const MapPage = () => {
                     <Link
                       to={`/map/${cropStore.attributes.location.lat}/${cropStore.attributes.location.lng}`}
                       className="text-blue-500 hover:text-blue-600"
-                      onClick={() =>
-                        setOpenDialog(cropStore.attributes.location)
-                      }
                     >
                       View on Map
                     </Link>
