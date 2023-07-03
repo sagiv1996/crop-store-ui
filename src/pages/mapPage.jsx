@@ -57,7 +57,7 @@ const MapPage = () => {
             </ul>
           </div>
           <div className="w-full md:w-9/12">
-            <MapDisplay center={center} />
+            <MapDisplay center={center} cropStores={data.stores.data} />
           </div>
         </div>
       )}
