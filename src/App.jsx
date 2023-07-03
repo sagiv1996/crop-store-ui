@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import MapPage from "./pages/MapPage";
+import MapRoute from "./pages/MapRoute";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const queryClient = new QueryClient();
@@ -13,7 +13,7 @@ const App = () => {
           <Route path="/" element={<Home />}></Route>
           <Route
             path="/map/:lat/:lng"
-            element={<MapPage />}
+            element={<MapRoute />}
             lazy={true}
           ></Route>
         </Routes>

@@ -11,7 +11,7 @@ import MapDisplay from "../components/MapDisplay";
 import ComboboxLocation from "../components/ComboxLocation";
 import { getStores } from "../graphqlQueries";
 
-const MapPage = () => {
+const MapRoute = () => {
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address") || "";
   const cropStoreId = searchParams.get("cropStoreId");
@@ -85,4 +85,4 @@ const MapPage = () => {
   );
 };
 
-export default MapPage;
+export default MapRoute;
