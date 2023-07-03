@@ -14,6 +14,7 @@ import { getStores } from "../graphqlQueries";
 const MapPage = () => {
   const [searchParams] = useSearchParams();
   const address = searchParams.get("address") || "";
+  const cropStoreId = searchParams.get("cropStoreId");
   const { lat, lng } = useParams();
   const navigate = useNavigate();
 
@@ -59,7 +60,10 @@ const MapPage = () => {
                       Distance: {cropStore.attributes.distance} km
                     </h3>
                     <Link
-                      to={`/map/${cropStore.attributes.location.lat}/${cropStore.attributes.location.lng}`}
+                      to={{
+                        path: `/map/${cropStore.attributes.location.lat}/${cropStore.attributes.location.lng}`,
+                        search: `cropStoreId=${cropStore.id}`,
+                      }}
                       className="text-blue-500 hover:text-blue-600"
                     >
                       View on Map
@@ -69,7 +73,11 @@ const MapPage = () => {
             </ul>
           </div>
           <div className="w-full md:w-9/12">
-            <MapDisplay center={center} cropStores={data.stores.data} />
+            <MapDisplay
+              center={center}
+              cropStores={data.stores.data}
+              cropStoreId={cropStoreId}
+            />
           </div>
         </div>
       )}

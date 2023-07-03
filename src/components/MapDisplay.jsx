@@ -3,12 +3,19 @@ import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
 import CropDetails from "./CropDetails";
 
-const MapDisplay = ({ center, cropStores }) => {
+const MapDisplay = ({ center, cropStores, cropStoreId }) => {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
     libraries: ["geometry", "drawing", "places"],
   });
+
+  useEffect(() => {
+    if (cropStoreId) {
+      setSelectedMarkerId(cropStoreId);
+      setIsOpen(true);
+    }
+  }, [cropStoreId]);
 
   const [isOpen, setIsOpen] = useState(false);
   const [selectedMarkerId, setSelectedMarkerId] = useState();
