@@ -1,5 +1,6 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
+import { Dialog } from "@headlessui/react";
 
 const MapDisplay = ({ center, cropStores }) => {
   const { isLoaded } = useJsApiLoader({
@@ -8,6 +9,14 @@ const MapDisplay = ({ center, cropStores }) => {
     libraries: ["geometry", "drawing", "places"],
   });
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedMarkerId, setSelectedMarkerId] = useState();
+
+  const handleClickMarker = (markerId) => {
+    setSelectedMarkerId(markerId);
+    setIsOpen(true);
+  };
+
   const containerStyle = {
     width: "100%",
     height: "100vh",
@@ -15,7 +24,6 @@ const MapDisplay = ({ center, cropStores }) => {
 
   const [markers, setMarkers] = useState();
   useEffect(() => {
-    console.log({ cropStores });
     if (isLoaded && cropStores) {
       setMarkers(cropStores);
     }
@@ -23,6 +31,27 @@ const MapDisplay = ({ center, cropStores }) => {
 
   return (
     <div className="relative">
+      {selectedMarkerId && (
+        <Dialog
+          open={isOpen}
+          onClose={() => setIsOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center"
+        >
+          <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
+
+          <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={() => setIsOpen(false)}
+                className="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-white rounded-lg"
+              >
+                Close
+              </button>
+            </div>
+          </Dialog.Panel>
+        </Dialog>
+      )}
+
       {isLoaded && cropStores && (
         <div className="h-full">
           <GoogleMap
