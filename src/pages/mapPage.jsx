@@ -17,7 +17,7 @@ const MapPage = () => {
 
   const center = { lat: Number(lat), lng: Number(lng) };
   const client = new GraphQLClient(
-    `${import.meta.env.VITE_BACKEND_ENDPOINT}graphql`
+    `${import.meta.env.VITE_BACKEND_ENDPOINT}/graphql`
   );
 
   return (

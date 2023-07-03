@@ -1,6 +1,7 @@
 import { GoogleMap, useJsApiLoader, Marker } from "@react-google-maps/api";
 import React, { useEffect, useState } from "react";
 import { Dialog } from "@headlessui/react";
+import CropDetails from "./CropDetails";
 
 const MapDisplay = ({ center, cropStores }) => {
   const { isLoaded } = useJsApiLoader({
@@ -40,6 +41,8 @@ const MapDisplay = ({ center, cropStores }) => {
           <Dialog.Overlay className="fixed inset-0 bg-black opacity-30" />
 
           <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+            <CropDetails details={selectedMarkerId} id={selectedMarkerId} />
+
             <div className="mt-4 flex justify-end">
               <button
                 onClick={() => setIsOpen(false)}
