@@ -13,9 +13,9 @@ Before running the project, make sure you have the following:
 
 ## Installation
 
-1. Clone the repository: `git clone <repository-url>`
-2. Navigate to the project directory: `cd <project-directory>`
-3. Install the dependencies: `npm install`
+1. Clone the repository: `git clone repository-url](https://github.com/sagiv1996/crop-store-ui`
+2. Navigate to the project directory: `cd crop-store-ui`
+3. Install the dependencies: `yarn`
 
 ## Configuration
 
@@ -29,14 +29,14 @@ Before running the project, make sure you have the following:
 ### Development Mode
 
 To run the project in development mode, use the following command:
-`npm run dev`
+`yarn dev`
 
 This will start the development server and the application will be accessible at `http://localhost:5173/`.
 
 ### Production Build
 
 To build the project for production, use the following command:
-`npm run build`
+`yarn build`
 
 
 This will create an optimized production build in the `dist` directory.
@@ -59,7 +59,7 @@ This project utilizes the following libraries and APIs:
 - `react-icons` - A library that provides a collection of icons for React components.
 - `react-router-dom` - A library for routing and navigation in React applications.
 
-Make sure to install these dependencies using `npm install` before running the project.
+Make sure to install these dependencies using `yarn` before running the project.
 
 ## Routes
 
@@ -69,9 +69,6 @@ This project includes the following routes:
 2. `/map/:lat/:lng?address=<address>&cropStoreId=<cropStoreId>` - Shows a map and next to it the existing branches.
 The center of the map comes from the link (lat, lng).
 In addition, you can write an address and cropStoreId. Information and sending an address, it will be displayed in the input box (otherwise it will only be there and it will be possible to enter another value and go to the relevant page). If you click on a specific marker on the map, or alternatively send cropStoreId, the page will open a pop up window and load the information about the desired branch
-
-Remember to replace `<repository-url>` and `<project-directory>` with the actual URL of your repository and the directory where the project is located.
-
 
 ![Screenshot 2023-07-03 222906](https://github.com/sagiv1996/crop-store-ui/assets/71065719/377580b1-06b1-47db-b4f5-97205d34799d)
 ![Screenshot 2023-07-03 223139](https://github.com/sagiv1996/crop-store-ui/assets/71065719/9259ec11-c0f8-4f3b-b5dc-080d629f8ae6)
